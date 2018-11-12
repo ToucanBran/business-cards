@@ -11,13 +11,15 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
+import { CaptureComponent } from './components/capture/capture.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     DashboardComponent,
-    NavigationComponent
+    NavigationComponent,
+    CaptureComponent
   ],
   imports: [
     BrowserModule,
