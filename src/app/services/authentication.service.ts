@@ -12,7 +12,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class LoginService {
+export class AuthenticationService {
   authState: Observable<{} | null>;
 
   user: Observable<{} | null>;
@@ -47,6 +47,8 @@ export class LoginService {
     return this.afAuth.auth.signInWithEmailAndPassword(email, password)
       .then((auth) => {
         console.log(auth.user.uid);
+        // possibly remove
+        this.userUid = auth.user.uid;
         const createdAt = firebase.database.ServerValue.TIMESTAMP;
         console.log('CREATED AT');
         console.log(createdAt);

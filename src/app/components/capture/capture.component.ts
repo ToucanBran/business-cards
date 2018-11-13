@@ -1,4 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { BusinessCard } from '../../models/business-card';
+import { BusinessCardService } from '../../services/business-card.service';
 
 @Component({
   selector: 'app-capture',
@@ -8,20 +10,20 @@ import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angula
 export class CaptureComponent implements OnInit, AfterViewInit {
 
   @ViewChild('video')
-  public video: ElementRef;
+  video: ElementRef;
 
   @ViewChild('canvas')
-  public canvas: ElementRef;
+  canvas: ElementRef;
 
-  public captures: Array<any>;
+  captures: Array<any>;
 
-  public constructor() {
+  constructor(private businessCardService: BusinessCardService) {
     this.captures = [];
   }
 
-  public ngOnInit() { }
+  ngOnInit() { }
 
-  public ngAfterViewInit() {
+  ngAfterViewInit() {
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
       navigator.mediaDevices.getUserMedia({ video: true }).then(stream => {
         this.video.nativeElement.src = window.URL.createObjectURL(stream);
@@ -30,8 +32,17 @@ export class CaptureComponent implements OnInit, AfterViewInit {
     }
   }
 
-  public capture() {
+  capture() {
     const context = this.canvas.nativeElement.getContext('2d').drawImage(this.video.nativeElement, 0, 0, 640, 480);
     this.captures.push(this.canvas.nativeElement.toDataURL('image/png'));
+    const bcard = Object.assign(new BusinessCard(), {
+      firstName: 'brandon',
+      lastName: 'gomez',
+      email: 'bg@gmail.com',
+      phoneNumber: '111-1111'
+    });
+    
+    this.businessCardService.addBusinessCard(bcard);
   }
+
 }

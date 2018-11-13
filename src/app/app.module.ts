@@ -5,6 +5,7 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AppRoutingModule } from './app-routing.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { firebaseConfig } from '../environments/environment';
 import { AppComponent } from './app.component';
@@ -12,6 +13,15 @@ import { LoginComponent } from './components/login/login.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { CaptureComponent } from './components/capture/capture.component';
+import { BusinessCardListComponent } from './components/business-card-list/business-card-list.component';
+import { MatFormFieldModule,
+          MatButtonModule,
+          MatInputModule,
+          MatSelectModule,
+          MatSortModule,
+          MatTableModule } from '@angular/material';
+import { BusinessCardComponent } from './components/business-card/business-card.component';
+import { BusinessCardFilterPipe } from './pipes/business-card-filter.pipe';
 
 @NgModule({
   declarations: [
@@ -19,7 +29,10 @@ import { CaptureComponent } from './components/capture/capture.component';
     LoginComponent,
     DashboardComponent,
     NavigationComponent,
-    CaptureComponent
+    CaptureComponent,
+    BusinessCardListComponent,
+    BusinessCardComponent,
+    BusinessCardFilterPipe
   ],
   imports: [
     BrowserModule,
@@ -27,7 +40,14 @@ import { CaptureComponent } from './components/capture/capture.component';
     FormsModule,
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireDatabaseModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    BrowserAnimationsModule,
+    MatFormFieldModule,
+    MatButtonModule,
+    MatInputModule,
+    MatSelectModule,
+    MatSortModule,
+    MatTableModule
   ],
   providers: [],
   bootstrap: [AppComponent]

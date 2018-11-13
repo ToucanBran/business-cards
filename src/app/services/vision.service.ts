@@ -9,6 +9,6 @@ export class VisionService {
   constructor() { }
 
   readImage() {
-    
+
   }
 }

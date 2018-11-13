@@ -1,0 +1,4 @@
+<input type="text" [(ngModel)]="filter" />
+  <div class="scrollable-list" *ngIf="businessCards$ | async as businessCards ">
+    <app-business-card class="row" *ngFor="let businessCard of businessCards | businessCardFilter: filter" [businessCard]="businessCard"></app-business-card>
+  </div>
