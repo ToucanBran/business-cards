@@ -14,12 +14,15 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { CaptureComponent } from './components/capture/capture.component';
 import { BusinessCardListComponent } from './components/business-card-list/business-card-list.component';
-import { MatFormFieldModule,
-          MatButtonModule,
-          MatInputModule,
-          MatSelectModule,
-          MatSortModule,
-          MatTableModule } from '@angular/material';
+import {
+  MatFormFieldModule,
+  MatButtonModule,
+  MatInputModule,
+  MatSelectModule,
+  MatSortModule,
+  MatTableModule,
+  MatIconModule
+} from '@angular/material';
 import { BusinessCardComponent } from './components/business-card/business-card.component';
 import { BusinessCardFilterPipe } from './pipes/business-card-filter.pipe';
 
@@ -47,7 +50,8 @@ import { BusinessCardFilterPipe } from './pipes/business-card-filter.pipe';
     MatInputModule,
     MatSelectModule,
     MatSortModule,
-    MatTableModule
+    MatTableModule,
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent]
