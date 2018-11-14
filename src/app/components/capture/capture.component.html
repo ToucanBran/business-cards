@@ -1,10 +1,8 @@
-<div id="app">
-  <div><video #video id="video" width="640" height="480" autoplay></video></div>
-  <div><button id="snap" (click)="capture()">Snap Photo</button></div>
+<div id="app" class="row">
+  <div><video #video id="video" class="col-sm-12" autoplay></video></div>
   <canvas #canvas id="canvas" width="640" height="480"></canvas>
-  <ul>
-      <li *ngFor="let c of captures">
-          <img src="{{ c }}" height="50" />
-      </li>
-  </ul>
+  <div class="buttons">
+    <button mat-raised-button (click)="close()">Exit</button>
+    <button mat-raised-button color="primary" id="snap" (click)="capture()">Snap Photo</button>
+  </div>
 </div>

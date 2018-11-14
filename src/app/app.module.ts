@@ -6,7 +6,7 @@ import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import { HttpClientModule } from '@angular/common/http';
 import { firebaseConfig } from '../environments/environment';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
@@ -21,7 +21,9 @@ import {
   MatSelectModule,
   MatSortModule,
   MatTableModule,
-  MatIconModule
+  MatIconModule,
+  MatTooltipModule,
+  MatDialogModule
 } from '@angular/material';
 import { BusinessCardComponent } from './components/business-card/business-card.component';
 import { BusinessCardFilterPipe } from './pipes/business-card-filter.pipe';
@@ -51,7 +53,13 @@ import { BusinessCardFilterPipe } from './pipes/business-card-filter.pipe';
     MatSelectModule,
     MatSortModule,
     MatTableModule,
-    MatIconModule
+    MatIconModule,
+    MatTooltipModule,
+    MatDialogModule,
+    HttpClientModule
+  ],
+  entryComponents: [
+    CaptureComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

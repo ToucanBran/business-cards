@@ -18,3 +18,18 @@ app-business-card {
     overflow-y: auto;
     overflow-x: none;
 }
+
+.green-icon {
+    color: #8ace2c;
+    cursor: pointer;
+}
+
+.green-icon:hover {
+    background: #8ace2c;
+    color: white;
+}
+
+#list-headers {
+    display: flex;
+    align-items: center;
+}
