@@ -3,19 +3,19 @@
 - npm install
 - You will need to create a environment.ts file in src/environments. It will need to contain the following constants:
 
-export const firebaseConfig = {
-  apiKey: 'xxxxxxxxxxxxxxxxxxxxxxxx',
-  authDomain: 'xxxxxxxxxxxxxxxxxxxxxxxx',
-  databaseURL: 'xxxxxxxxxxxxxxxxxxxxxxxx',
-  projectId: 'xxxxxxxxxxxxxxxxxxxxxxxx,
-  storageBucket: 'xxxxxxxxxxxxxxxxxxxxxxxx',
-  messagingSenderId: 'xxxxxxxxxxxxxxxxxxxxxxxx'
+export const firebaseConfig = { <br>
+  apiKey: 'xxxxxxxxxxxxxxxxxxxxxxxx',<br>
+  authDomain: 'xxxxxxxxxxxxxxxxxxxxxxxx',<br>
+  databaseURL: 'xxxxxxxxxxxxxxxxxxxxxxxx',<br>
+  projectId: 'xxxxxxxxxxxxxxxxxxxxxxxx,<br>
+  storageBucket: 'xxxxxxxxxxxxxxxxxxxxxxxx',<br>
+  messagingSenderId: 'xxxxxxxxxxxxxxxxxxxxxxxx'<br>
 };
-
-export const googleApi = {
-  visionKey: 'xxxxxxxxxxxxxxxxxxxxxxxx',
-  languageKey: 'xxxxxxxxxxxxxxxxxxxxxxxx'
-};
+<br>
+export const googleApi = {<br>
+  visionKey: 'xxxxxxxxxxxxxxxxxxxxxxxx',<br>
+  languageKey: 'xxxxxxxxxxxxxxxxxxxxxxxx'<br>
+};<br>
 
 Without these the project will not work. You will need API keys for google Vision and google Cloud Natural Language
 
