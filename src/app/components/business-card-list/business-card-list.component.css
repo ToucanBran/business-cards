@@ -6,12 +6,6 @@ table {
 font-size: 14px;
 width: 100%;
 }
-  
-app-business-card {
-    margin-top:.5em;
-    margin-bottom: .5em;
-    justify-content: center;
-}
 
 .scrollable-list {
     height: 500px;

@@ -23,7 +23,8 @@ import {
   MatTableModule,
   MatIconModule,
   MatTooltipModule,
-  MatDialogModule
+  MatDialogModule,
+  MatProgressSpinnerModule
 } from '@angular/material';
 import { BusinessCardComponent } from './components/business-card/business-card.component';
 import { BusinessCardFilterPipe } from './pipes/business-card-filter.pipe';
@@ -56,7 +57,8 @@ import { BusinessCardFilterPipe } from './pipes/business-card-filter.pipe';
     MatIconModule,
     MatTooltipModule,
     MatDialogModule,
-    HttpClientModule
+    HttpClientModule,
+    MatProgressSpinnerModule
   ],
   entryComponents: [
     CaptureComponent

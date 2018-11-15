@@ -7,5 +7,5 @@
   (click)="openCaptureDialog()">add</mat-icon>
 </div>
 <div class="scrollable-list" *ngIf="businessCards$ | async as businessCards ">
-  <app-business-card class="row" *ngFor="let businessCard of businessCards | businessCardFilter: filter" [businessCard]="businessCard"></app-business-card>
+  <app-business-card *ngFor="let businessCard of businessCards | businessCardFilter: filter" [businessCard]="businessCard"></app-business-card>
 </div>

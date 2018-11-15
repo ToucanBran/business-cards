@@ -28,9 +28,7 @@ export class BusinessCardListComponent implements OnInit, OnDestroy {
   }
 
   openCaptureDialog() {
-    const dialogRef = this.dialog.open(CaptureComponent, {
-      width: '400px'
-    });
+    const dialogRef = this.dialog.open(CaptureComponent, { });
     dialogRef.afterClosed().pipe(takeUntil(this.unsubscribe$))
     .subscribe(result => {
       console.log('The dialog was closed');

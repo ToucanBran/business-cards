@@ -1,8 +1,20 @@
-<div id="app" class="row">
-  <div><video #video id="video" class="col-sm-12" autoplay></video></div>
-  <canvas #canvas id="canvas" width="640" height="480"></canvas>
-  <div class="buttons">
-    <button mat-raised-button (click)="close()">Exit</button>
-    <button mat-raised-button color="primary" id="snap" (click)="capture()">Snap Photo</button>
+<ng-container [ngSwitch]="showCapture">
+  <div *ngSwitchCase="false" class="row">
+    <div><video #video id="video" class="col-sm-12" autoplay></video></div>
+    <canvas #canvas id="canvas" width="640" height="480"></canvas>
+    <div class="buttons">
+      <button mat-raised-button (click)="close()">Exit</button>
+      <button mat-raised-button color="primary" id="snap" (click)="capture()">Snap Photo</button>
+    </div>
   </div>
-</div>
+  <div *ngSwitchCase="true">
+    <div class="row flex-column" *ngIf="businessCard$ | async as businessCard;else loading">
+      <app-business-card [businessCard]=businessCard></app-business-card>
+      <div class="buttons">
+          <button mat-raised-button (click)="closeCapture()">Try Again</button>
+          <button mat-raised-button color="primary" (click)="addBusinessCard()">All Good!</button>
+        </div>
+    </div>
+    <ng-template #loading><mat-spinner></mat-spinner></ng-template>
+  </div>
+</ng-container>
