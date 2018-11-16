@@ -13,6 +13,7 @@ export class BusinessCard {
     //     }
 
     getKey() {
-        return this.firstName + this.lastName;
+        // strips punctation as well
+        return `${this.firstName}${this.lastName}`.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, '');
     }
 }

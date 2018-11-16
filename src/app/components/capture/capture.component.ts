@@ -46,6 +46,9 @@ export class CaptureComponent implements OnInit, AfterViewInit, OnDestroy {
           .subscribe((businessCard: BusinessCard) => {
             businessCard.imageUri = encodedImage;
             this.confirmBusinessCard(businessCard);
+          },
+          err => {
+            console.log(err);
           });
         });
       });
@@ -64,6 +67,7 @@ export class CaptureComponent implements OnInit, AfterViewInit, OnDestroy {
 
   closeCapture() {
     this.showCapture = false;
+    this._businessCardSubject.next(null);
     this.doVideoStuff();
   }
 

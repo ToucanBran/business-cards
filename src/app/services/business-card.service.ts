@@ -2,10 +2,11 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { AuthenticationService } from './authentication.service';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { BusinessCard } from '../models/business-card';
-import { map, takeUntil } from 'rxjs/operators';
-import { Observable, Subject } from 'rxjs';
+import { map, filter, mergeMap, mapTo, catchError, reduce, concatMap, takeUntil } from 'rxjs/operators';
+import { Observable, Subject, of, from } from 'rxjs';
 import { removeEmails, removePhoneNumbers, removePostcodes } from '../helpers/business-card/parsing';
 import { LanguageService } from './language.service';
+import { validateConfig } from '@angular/router/src/config';
 
 @Injectable({
   providedIn: 'root'
@@ -53,31 +54,62 @@ export class BusinessCardService implements OnDestroy {
     text = stringWithoutPostalCode;
 
     return this.languageService.getRelevantStrings(text).pipe(
-      map(
+      mergeMap(
         (entities: any[]) => {
+          let person = entities.filter(entity => entity['type'] === 'PERSON')
+            .map(entity => entity['name'].toLowerCase().split(' '));
+          if (person.length > 0) {
+            person = person.reduce((acc, val) => acc.concat(val));
+          }
+          return this.getFirstAndLastName(person).pipe(takeUntil(this.unsubscribe$),
+          reduce((acc, val) => { acc[val['key']] = val['result']; console.log(acc); return acc; }, {})
+          );
+        },
+        (entities: any[], firstAndLastName: any) => {
           let location = '';
-          let person = '';
           entities.forEach(entity => {
             if (entity['type'] === 'LOCATION') {
               location += ` ${entity['name']}`;
             }
-            else if (!person && entity['type'] === 'PERSON') {
-              person = entity['name'];
-            }
           });
-          location = location.trim();
+          // businessCard.firstName = firstAndLastName['firstName'];
+          // businessCard.lastName = firstAndLastName['lastName'];
           businessCard.extraText = postalCode[0] ? `${location}, ${postalCode[0]}` : location;
-          if (person) {
-            businessCard.firstName = person.split(' ')[0];
-            businessCard.lastName = person.split(' ')[1];
-          }
-          else {
-            businessCard.firstName = 'Unknown';
-            businessCard.lastName = 'Unknown';
-          }
           return businessCard;
         })
     );
+  }
+
+  // expects entity objects from google cloud natural language api
+  getFirstAndLastName(names: string[]): Observable<any> {
+    const firstAndLastNames = { firstName: 'Unknown', lastName: 'Unknown' };
+     const source = from(['eric', 'sherman', '']);
+     const endStream$ = new Subject();
+    // return source.pipe(
+      //
+    //   map(name => name.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, '')),
+    //   mergeMap(strippedName => this.firebaseDB.object(`names/first-names/${strippedName}`).valueChanges()
+    //     .pipe(
+    //       filter(x => x !== null),
+    //       mapTo(strippedName),
+    //     )
+    //   ),
+    //   reduce((acc, value) => acc.concat(value), []),
+    //   catchError(err => '')
+    // );
+    return source.pipe(
+      map(name => {
+        return name.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, '');
+      }),
+      mergeMap(key => this.firebaseDB.object(`names/first-names/${key}`).valueChanges().pipe(
+        filter (result => {
+          if (key === '') {
+            this.unsubscribe$.next();
+          }
+          return result === true;
+        }),
+          mapTo(key)
+        )));
   }
 
   ngOnDestroy(): void {
