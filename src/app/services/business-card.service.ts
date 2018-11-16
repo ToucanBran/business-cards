@@ -2,7 +2,7 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { AuthenticationService } from './authentication.service';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { BusinessCard } from '../models/business-card';
-import { map, filter, mergeMap, mapTo, catchError, reduce, concatMap, takeUntil } from 'rxjs/operators';
+import { map, filter, mergeMap, mapTo, catchError, reduce, concatMap, takeUntil, toArray, first } from 'rxjs/operators';
 import { Observable, Subject, of, from } from 'rxjs';
 import { removeEmails, removePhoneNumbers, removePostcodes } from '../helpers/business-card/parsing';
 import { LanguageService } from './language.service';
@@ -62,18 +62,28 @@ export class BusinessCardService implements OnDestroy {
             person = person.reduce((acc, val) => acc.concat(val));
           }
           return this.getFirstAndLastName(person).pipe(takeUntil(this.unsubscribe$),
-          reduce((acc, val) => { acc[val['key']] = val['result']; console.log(acc); return acc; }, {})
+            toArray()
           );
         },
-        (entities: any[], firstAndLastName: any) => {
+        (entities: any[], firstAndLastName: any[]) => {
           let location = '';
+          for (let i = 0; i < firstAndLastName.length; i++) {
+            if (businessCard.firstName && businessCard.lastName) {
+              i = firstAndLastName.length + 1;
+            }
+
+            if (businessCard.firstName == null && firstAndLastName[i]['first'].length > 0) {
+              businessCard.firstName = firstAndLastName[i]['first'][0];
+            }
+            else if (businessCard.lastName == null && firstAndLastName[i]['last'].length > 0) {
+              businessCard.lastName = firstAndLastName[i]['last'][0];
+            }
+          }
           entities.forEach(entity => {
             if (entity['type'] === 'LOCATION') {
               location += ` ${entity['name']}`;
             }
           });
-          // businessCard.firstName = firstAndLastName['firstName'];
-          // businessCard.lastName = firstAndLastName['lastName'];
           businessCard.extraText = postalCode[0] ? `${location}, ${postalCode[0]}` : location;
           return businessCard;
         })
@@ -83,33 +93,32 @@ export class BusinessCardService implements OnDestroy {
   // expects entity objects from google cloud natural language api
   getFirstAndLastName(names: string[]): Observable<any> {
     const firstAndLastNames = { firstName: 'Unknown', lastName: 'Unknown' };
-     const source = from(['eric', 'sherman', '']);
-     const endStream$ = new Subject();
-    // return source.pipe(
-      //
-    //   map(name => name.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, '')),
-    //   mergeMap(strippedName => this.firebaseDB.object(`names/first-names/${strippedName}`).valueChanges()
-    //     .pipe(
-    //       filter(x => x !== null),
-    //       mapTo(strippedName),
-    //     )
-    //   ),
-    //   reduce((acc, value) => acc.concat(value), []),
-    //   catchError(err => '')
-    // );
+    const source = from(['eric', 'sherman', 'gutierrez', '']);
+    const endStream$ = new Subject();
+
     return source.pipe(
       map(name => {
         return name.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, '');
       }),
       mergeMap(key => this.firebaseDB.object(`names/first-names/${key}`).valueChanges().pipe(
-        filter (result => {
+        mergeMap(
+          _ => this.firebaseDB.object(`names/last-names/${key}`).valueChanges(),
+          (valueFromFirst, valueFromSecond) => {
+            const validName = { 'first': [], 'last': [] };
+            if (valueFromFirst) {
+              validName.first.push(key);
+            }
+            if (valueFromSecond) {
+              validName.last.push(key);
+            }
+            return validName;
+          }),
+        filter(result => {
           if (key === '') {
             this.unsubscribe$.next();
           }
-          return result === true;
-        }),
-          mapTo(key)
-        )));
+          return result.first.length > 0 || result.last.length > 0;
+        }))));
   }
 
   ngOnDestroy(): void {
