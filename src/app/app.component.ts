@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-
+import { NgxAnalyticsGoogleAnalytics } from 'ngx-analytics/ga';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -7,4 +7,7 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'business-cards';
+
+  constructor(ngxAnalyticsGoogleAnalytics: NgxAnalyticsGoogleAnalytics) {}
+
 }

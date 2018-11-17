@@ -27,6 +27,7 @@ import {
   MatProgressSpinnerModule
 } from '@angular/material';
 import { MomentModule } from 'ngx-moment';
+import { NgxAnalyticsModule } from 'ngx-analytics';
 import { BusinessCardComponent } from './components/business-card/business-card.component';
 import { BusinessCardFilterPipe } from './pipes/business-card-filter.pipe';
 import { HistoryComponent } from './components/history/history.component';
@@ -62,7 +63,8 @@ import { HistoryComponent } from './components/history/history.component';
     MatDialogModule,
     HttpClientModule,
     MatProgressSpinnerModule,
-    MomentModule
+    MomentModule,
+    NgxAnalyticsModule
   ],
   entryComponents: [
     CaptureComponent

@@ -11,8 +11,16 @@
     <div class="row flex-column" *ngIf="businessCard$ | async as businessCard;else loading">
       <app-business-card [businessCard]=businessCard></app-business-card>
       <div class="buttons">
-          <button mat-raised-button (click)="closeCapture()">Try Again</button>
-          <button mat-raised-button color="primary" (click)="addBusinessCard()">All Good!</button>
+          <button mat-raised-button 
+          ngx-analyticsOn="click"
+          angularticsAction="Undo" 
+          angularticsCategory="Capture"
+          (click)="retake()">Try Again</button>
+          <button mat-raised-button color="primary" 
+          ngx-analyticsOn="click"
+          angularticsAction="Saved" 
+          angularticsCategory="Capture"
+          (click)="addBusinessCard()">All Good!</button>
         </div>
     </div>
     <ng-template #loading><mat-spinner></mat-spinner></ng-template>

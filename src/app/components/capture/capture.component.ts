@@ -4,7 +4,7 @@ import { BusinessCardService } from '../../services/business-card.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { VisionService } from '../../services/vision.service';
 import { Subject, BehaviorSubject } from 'rxjs';
-import { takeUntil, concatMap } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 import { HistoryService } from '../../services/history.service';
 
 @Component({
@@ -68,10 +68,13 @@ export class CaptureComponent implements OnInit, AfterViewInit, OnDestroy {
   closeCapture() {
     this.showCapture = false;
     this._businessCardSubject.next(null);
-    this.historyService.addHistory('undo - User parsed a business card but wasn\'t satisfied so they clicked "try again"');
     this.doVideoStuff();
   }
 
+  retake() {
+    this.historyService.addHistory('undo - User parsed a business card but wasn\'t satisfied so they clicked "try again"');
+    this.closeCapture();
+  }
   close() {
     this.dialogRef.close();
   }

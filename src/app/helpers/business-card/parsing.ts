@@ -42,4 +42,5 @@ const phoneNumberRegex =
 export const removePhoneNumbers = str => {
     const {matches, cleanedText } = removeByRegex(str, phoneNumberRegex);
     return {phoneNumbers: matches, stringWithoutPhoneNumbers: cleanedText };
-}
+};
+
