@@ -13,7 +13,6 @@ export class BusinessCardComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log(this.businessCard);
   }
 
 }

@@ -26,8 +26,10 @@ import {
   MatDialogModule,
   MatProgressSpinnerModule
 } from '@angular/material';
+import { MomentModule } from 'ngx-moment';
 import { BusinessCardComponent } from './components/business-card/business-card.component';
 import { BusinessCardFilterPipe } from './pipes/business-card-filter.pipe';
+import { HistoryComponent } from './components/history/history.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +40,8 @@ import { BusinessCardFilterPipe } from './pipes/business-card-filter.pipe';
     CaptureComponent,
     BusinessCardListComponent,
     BusinessCardComponent,
-    BusinessCardFilterPipe
+    BusinessCardFilterPipe,
+    HistoryComponent
   ],
   imports: [
     BrowserModule,
@@ -58,7 +61,8 @@ import { BusinessCardFilterPipe } from './pipes/business-card-filter.pipe';
     MatTooltipModule,
     MatDialogModule,
     HttpClientModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MomentModule
   ],
   entryComponents: [
     CaptureComponent

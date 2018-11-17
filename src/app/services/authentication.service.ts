@@ -8,6 +8,7 @@ import { AngularFireDatabase } from '@angular/fire/database';
 // import * as firebase from 'firebase';
 import * as firebase from 'firebase/app';
 import { Observable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -23,8 +24,8 @@ export class AuthenticationService {
     private db: AngularFireDatabase
   ) {
 
-    this.user = this.afAuth.authState
-    .switchMap((user) => {
+    this.user = this.afAuth.authState.pipe(
+      switchMap ((user) => {
       if (user) {
         this.userUid = user.uid;
         console.log('SWITCHMAP');
@@ -40,7 +41,7 @@ export class AuthenticationService {
       } else {
         return Observable.of(null);
       }
-    });
+    }));
   }
 
   loginWithEmail(email: string, password: string) {

@@ -10,7 +10,6 @@ h2 {
 
 .business-card-header {
     display: flex;
-    flex-direction: column;
     align-items: center;
     background: #4E4D4D;
     color: white;
@@ -39,4 +38,15 @@ h2 {
     margin-top: .5em;
     margin-bottom: .5em;
     justify-content: center;
+}
+
+img {
+    width: 25%;
+}
+
+.name-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
 }

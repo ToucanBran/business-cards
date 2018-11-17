@@ -6,7 +6,7 @@ import { map, filter, mergeMap, mapTo, catchError, reduce, concatMap, takeUntil,
 import { Observable, Subject, of, from } from 'rxjs';
 import { removeEmails, removePhoneNumbers, removePostcodes } from '../helpers/business-card/parsing';
 import { LanguageService } from './language.service';
-import { validateConfig } from '@angular/router/src/config';
+import { HistoryService } from './history.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +18,8 @@ export class BusinessCardService implements OnDestroy {
 
   constructor(private authService: AuthenticationService,
     private firebaseDB: AngularFireDatabase,
-    private languageService: LanguageService) {
+    private languageService: LanguageService,
+    private historyService: HistoryService) {
     this.businessCardsRef =
       this.firebaseDB.list<BusinessCard>(`businessCards/${this.authService.userUid}`);
   }
@@ -35,6 +36,8 @@ export class BusinessCardService implements OnDestroy {
 
   addBusinessCard(businessCard: BusinessCard) {
     this.businessCardsRef.push({ [businessCard.getKey()]: businessCard });
+    this.historyService
+      .addHistory(`add - User added business card for ${businessCard.firstName} ${businessCard.lastName}`);
   }
 
   parseBusinessCard(businessCardText: string): Observable<BusinessCard> {
@@ -71,13 +74,16 @@ export class BusinessCardService implements OnDestroy {
             if (businessCard.firstName && businessCard.lastName) {
               i = firstAndLastName.length + 1;
             }
-
-            if (businessCard.firstName == null && firstAndLastName[i]['first'].length > 0) {
+            if (!businessCard.firstName && firstAndLastName[i]['first'].length > 0) {
               businessCard.firstName = firstAndLastName[i]['first'][0];
             }
-            else if (businessCard.lastName == null && firstAndLastName[i]['last'].length > 0) {
+            else if (!businessCard.lastName && firstAndLastName[i]['last'].length > 0) {
               businessCard.lastName = firstAndLastName[i]['last'][0];
             }
+          }
+          if (!businessCard.firstName && !businessCard.lastName) {
+            businessCard.firstName = 'Unknown';
+            businessCard.lastName = 'Unknown';
           }
           entities.forEach(entity => {
             if (entity['type'] === 'LOCATION') {
@@ -92,9 +98,8 @@ export class BusinessCardService implements OnDestroy {
 
   // expects entity objects from google cloud natural language api
   getFirstAndLastName(names: string[]): Observable<any> {
-    const firstAndLastNames = { firstName: 'Unknown', lastName: 'Unknown' };
-    const source = from(['eric', 'sherman', 'gutierrez', '']);
-    const endStream$ = new Subject();
+    names.push('');
+    const source = from(names);
 
     return source.pipe(
       map(name => {

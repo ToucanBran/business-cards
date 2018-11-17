@@ -1,25 +1,27 @@
 <div class="container-fluid div-float">
   <div class="row flex-column">
     <div class="col-sm-12 business-card-header">
-      <img src="..." alt="..." class="rounded-circle img-thumbnail">
-      <h2>{{businessCard.firstName}}</h2>
-      <h2>{{businessCard.lastName}}</h2>
+      <img src="data:image/png;base64,{{businessCard.imageUri}}" alt="..." class="rounded-circle img-thumbnail">
+      <div class="name-container mx-auto">
+        <h2 class="col-sm-12">{{businessCard.firstName}}</h2>
+        <h2 class="col-sm-12">{{businessCard.lastName}}</h2>
+      </div>
     </div>
     <div class="col-sm-12 details">
       <div class="row justify-content-center">
-      <div id="email" *ngIf="businessCard.email" class="col-sm-4 info">
-        <mat-icon>email</mat-icon>
-        <div>{{businessCard.email}}</div>
-      </div>
-      <div *ngIf="businessCard.phoneNumber" class="col-sm-4 info">
-        <mat-icon>phone</mat-icon>
-        <div>{{businessCard.phoneNumber}}</div>
-      </div>
-      <div *ngIf="businessCard.extraText" class="col-sm-4 info">
-        <mat-icon>info</mat-icon>
-        <div>{{businessCard.extraText}}</div>
+        <div id="email" *ngIf="businessCard.email" class="col-sm-4 info">
+          <mat-icon>email</mat-icon>
+          <div>{{businessCard.email}}</div>
+        </div>
+        <div *ngIf="businessCard.phoneNumber" class="col-sm-4 info">
+          <mat-icon>phone</mat-icon>
+          <div>{{businessCard.phoneNumber}}</div>
+        </div>
+        <div *ngIf="businessCard.extraText" class="col-sm-4 info">
+          <mat-icon>info</mat-icon>
+          <div>{{businessCard.extraText}}</div>
+        </div>
       </div>
     </div>
-  </div>
   </div>
 </div>

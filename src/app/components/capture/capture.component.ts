@@ -5,6 +5,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { VisionService } from '../../services/vision.service';
 import { Subject, BehaviorSubject } from 'rxjs';
 import { takeUntil, concatMap } from 'rxjs/operators';
+import { HistoryService } from '../../services/history.service';
 
 @Component({
   selector: 'app-capture',
@@ -26,6 +27,7 @@ export class CaptureComponent implements OnInit, AfterViewInit, OnDestroy {
 
   constructor(private businessCardService: BusinessCardService,
     private visionService: VisionService,
+    private historyService: HistoryService,
     public dialogRef: MatDialogRef<CaptureComponent>) {
   }
 
@@ -35,6 +37,7 @@ export class CaptureComponent implements OnInit, AfterViewInit, OnDestroy {
     this.doVideoStuff();
   }
 
+  // TextDetection
   capture() {
     this.canvas.nativeElement.getContext('2d').drawImage(this.video.nativeElement, 0, 0, 640, 480);
     const encodedImage = this.canvas.nativeElement.toDataURL('image/png').split(',')[1];
@@ -46,9 +49,6 @@ export class CaptureComponent implements OnInit, AfterViewInit, OnDestroy {
           .subscribe((businessCard: BusinessCard) => {
             businessCard.imageUri = encodedImage;
             this.confirmBusinessCard(businessCard);
-          },
-          err => {
-            console.log(err);
           });
         });
       });
@@ -68,6 +68,7 @@ export class CaptureComponent implements OnInit, AfterViewInit, OnDestroy {
   closeCapture() {
     this.showCapture = false;
     this._businessCardSubject.next(null);
+    this.historyService.addHistory('undo - User parsed a business card but wasn\'t satisfied so they clicked "try again"');
     this.doVideoStuff();
   }
 
