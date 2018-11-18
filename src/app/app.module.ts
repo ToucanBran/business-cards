@@ -33,6 +33,7 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { BusinessCardComponent } from './components/business-card/business-card.component';
 import { BusinessCardFilterPipe } from './pipes/business-card-filter.pipe';
 import { HistoryComponent } from './components/history/history.component';
+import { BusinessCardLargeComponent } from './components/business-card-large/business-card-large.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { HistoryComponent } from './components/history/history.component';
     BusinessCardListComponent,
     BusinessCardComponent,
     BusinessCardFilterPipe,
-    HistoryComponent
+    HistoryComponent,
+    BusinessCardLargeComponent
   ],
   imports: [
     BrowserModule,

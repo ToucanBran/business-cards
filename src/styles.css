@@ -2,7 +2,7 @@
 @import '~bootstrap/dist/css/bootstrap.min.css';
 @import '@angular/material/prebuilt-themes/deeppurple-amber.css';
 @import "~material-design-icons/iconfont/material-icons.css";
-
+@import "~font-awesome/css/font-awesome.css";
 
 .scrollable-list {
     height: 500px;
@@ -10,4 +10,20 @@
     overflow-x: hidden;
     padding: 10px;
 
+}
+
+body {
+    background: #e9e9e9;
+}
+
+.div-float {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 1px 1px 10px #ccc;
+}
+
+.heading {
+    border-bottom: 1px solid #ccc;
+    padding: 5px;
+    color: #606060;
 }

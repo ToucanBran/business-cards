@@ -1,11 +1,14 @@
-<div row>
+<div class="mt-2 div-float">
+  <h5 class="heading">History</h5>
   <div class="col-md-12 scrollable-list">
-    <div class="row" *ngFor="let history of history$ | async">
-      <mat-icon class="col-1">{{history.icon}}</mat-icon>
+    <div id="history-item" class="row" *ngFor="let history of history$ | async">
+      <div class="col-1 d-flex">
+      <mat-icon [ngClass]="history.icon" class="align-self-center">{{history.icon}}</mat-icon>
+    </div>
       <div class="col-9 col-md-7">
         <div class="row">
           <div class="col-md-12">{{history.action}}</div>
-          <div class="col-md-12">{{history.timestamp | amTimeAgo}}</div>
+          <div id="time" class="col-md-12">{{history.timestamp | amTimeAgo}}</div>
         </div>
       </div>
       <div class="offset-1 col-md-3">{{history.timestamp | amLocal | amDateFormat: 'LL'}}</div>

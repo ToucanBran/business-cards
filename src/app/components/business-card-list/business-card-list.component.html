@@ -1,11 +1,13 @@
-<div id="list-headers">
-  <mat-form-field>
-    <input matInput placeholder="Contact Name" [(ngModel)]="filter" />
-  </mat-form-field>
-  <mat-icon class="green-icon" 
-  matTooltip="Click to add a new business card."
-  (click)="openCaptureDialog()">add</mat-icon>
-</div>
-<div class="scrollable-list" *ngIf="businessCards$ | async as businessCards ">
-  <app-business-card *ngFor="let businessCard of businessCards | businessCardFilter: filter" [businessCard]="businessCard"></app-business-card>
+<div class="div-float">
+  <h5 class="heading">Business Cards</h5>
+    <div id="list-headers">
+      <mat-form-field>
+        <input matInput placeholder="Contact Name" [(ngModel)]="filter" />
+      </mat-form-field>
+      <mat-icon class="green-icon" matTooltip="Click to add a new business card." (click)="openCaptureDialog()">person_add</mat-icon>
+    </div>
+    <div class="scrollable-list" *ngIf="businessCards$ | async as businessCards ">
+      <app-business-card *ngFor="let businessCard of businessCards | businessCardFilter: filter" 
+     (click)="view(businessCard)" [businessCard]="businessCard"></app-business-card>
+    </div>
 </div>

@@ -1,0 +1,15 @@
+#history-item {
+    border-bottom: 1px solid #ccc
+}
+
+#time {
+    color: #ccc;
+}
+
+.undo {
+    color: #007bff;
+}
+
+.add {
+    color: #8ace2c;
+}

@@ -3,7 +3,7 @@ import { AuthenticationService } from './authentication.service';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { BusinessCard } from '../models/business-card';
 import { map, filter, mergeMap, mapTo, catchError, reduce, concatMap, takeUntil, toArray, first } from 'rxjs/operators';
-import { Observable, Subject, of, from } from 'rxjs';
+import { Observable, Subject, of, from, BehaviorSubject } from 'rxjs';
 import { removeEmails, removePhoneNumbers, removePostcodes } from '../helpers/business-card/parsing';
 import { LanguageService } from './language.service';
 import { HistoryService } from './history.service';
@@ -14,7 +14,9 @@ import { HistoryService } from './history.service';
 export class BusinessCardService implements OnDestroy {
 
   businessCardsRef: any;
-  private unsubscribe$ = new Subject<void>();
+  private _unsubscribe = new Subject<void>();
+  private _selectedBusinessCard = new BehaviorSubject<BusinessCard>(null);
+  selectedBusinessCard$ = this._selectedBusinessCard.asObservable();
 
   constructor(private authService: AuthenticationService,
     private firebaseDB: AngularFireDatabase,
@@ -64,7 +66,7 @@ export class BusinessCardService implements OnDestroy {
           if (person.length > 0) {
             person = person.reduce((acc, val) => acc.concat(val));
           }
-          return this.getFirstAndLastName(person).pipe(takeUntil(this.unsubscribe$),
+          return this.getFirstAndLastName(person).pipe(takeUntil(this._unsubscribe),
             toArray()
           );
         },
@@ -120,14 +122,18 @@ export class BusinessCardService implements OnDestroy {
           }),
         filter(result => {
           if (key === '') {
-            this.unsubscribe$.next();
+            this._unsubscribe.next();
           }
           return result.first.length > 0 || result.last.length > 0;
         }))));
   }
 
+  selectBusinessCard(businessCard: BusinessCard) {
+    this._selectedBusinessCard.next(businessCard);
+  }
+
   ngOnDestroy(): void {
-    this.unsubscribe$.next();
-    this.unsubscribe$.complete();
+    this._unsubscribe.next();
+    this._unsubscribe.complete();
   }
 }

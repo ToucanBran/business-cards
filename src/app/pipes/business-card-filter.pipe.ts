@@ -8,10 +8,10 @@ export class BusinessCardFilterPipe implements PipeTransform {
 
   transform(items: BusinessCard[], arg: string): any {
     if (items) {
-      arg.toLowerCase();
+      const search = arg.toLowerCase();
       return items.filter(item => {
-        return  item.firstName.toLowerCase().includes(arg)
-                || item.lastName.toLowerCase().includes(arg);
+        return  item.firstName.toLowerCase().includes(search)
+                || item.lastName.toLowerCase().includes(search);
       });
     }
   }

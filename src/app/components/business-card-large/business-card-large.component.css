@@ -1,0 +1,18 @@
+.set-height {
+    height: 500px;
+}
+
+.ultimate-center {
+    justify-content: center;
+    align-self: center;
+    text-align: center;
+}
+
+mat-icon {
+    font-size: 3em;
+}
+
+
+img {
+    border-radius: 10px;
+}

@@ -16,4 +16,6 @@ export class HistoryComponent implements OnInit {
   ngOnInit() {
     this.history$ = this.historyService.getSearchHistory();
   }
+
+  getIconColor() {}
 }

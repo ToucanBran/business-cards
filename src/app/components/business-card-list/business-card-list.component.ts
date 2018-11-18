@@ -35,6 +35,10 @@ export class BusinessCardListComponent implements OnInit, OnDestroy {
     });
   }
 
+  view(businessCard: BusinessCard) {
+    this.businessCardService.selectBusinessCard(businessCard);
+  }
+
   ngOnDestroy(): void {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
