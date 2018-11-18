@@ -24,10 +24,12 @@ import {
   MatIconModule,
   MatTooltipModule,
   MatDialogModule,
-  MatProgressSpinnerModule
+  MatProgressSpinnerModule,
+  MatMenuModule
 } from '@angular/material';
 import { MomentModule } from 'ngx-moment';
 import { NgxAnalyticsModule } from 'ngx-analytics';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { BusinessCardComponent } from './components/business-card/business-card.component';
 import { BusinessCardFilterPipe } from './pipes/business-card-filter.pipe';
 import { HistoryComponent } from './components/history/history.component';
@@ -64,7 +66,9 @@ import { HistoryComponent } from './components/history/history.component';
     HttpClientModule,
     MatProgressSpinnerModule,
     MomentModule,
-    NgxAnalyticsModule
+    NgxAnalyticsModule,
+    MatMenuModule,
+    BsDropdownModule.forRoot()
   ],
   entryComponents: [
     CaptureComponent
